@@ -1,17 +1,22 @@
-const { setWorldConstructor } = require('cucumber')
+const { setWorldConstructor } = require('cucumber');
+const puppeteer = require('puppeteer');
 
 class CustomWorld {
     constructor() {
-        this.variable = 0
+        console.log('world intering ')
+        let self = this;
+        this.browser= setBrowser();
+
     }
 
-    setTo(number) {
-        this.variable = number
+    get driver() {
+        return this.browser;
     }
-
-    incrementBy(number) {
-        this.variable += number
+    set driver(bw) {
+        this.browser = bw;
     }
 }
-
+async function setBrowser(){
+    return  await puppeteer.launch({headless:false});
+}
 setWorldConstructor(CustomWorld)
